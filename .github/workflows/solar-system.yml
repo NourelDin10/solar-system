@@ -7,11 +7,11 @@ on:
             - 'feature/*'   
   
 
-env:
-  MONGO_URI: 'mongodb+srv://${{ vars.MONGO_USERNAME }}:${{ secrets.MONGO_PASSWORD }}@cluster0.kirie.mongodb.net/?retryWrites=true&w=majority'
+#env:
+ # MONGO_URI: 'mongodb+srv://${{ vars.MONGO_USERNAME }}:${{ secrets.MONGO_PASSWORD }}@cluster0.kirie.mongodb.net/?retryWrites=true&w=majority'
  
-  MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
-  MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD}}
+  #MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
+  #MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD}}
               
 
 jobs:
@@ -28,5 +28,8 @@ jobs:
            
             - name: install dependencies 
               run : npm install 
-            - name: unit testing
-              run: npm         
+            - name: upload node-module
+              uses: actions/upload-artifact@v4
+              with:
+                    name: my-artifact
+                    path: node-modules       
