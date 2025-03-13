@@ -30,8 +30,8 @@ jobs:
               run : npm install 
             - name: list files  
               run : ls -lR
-            #- name: upload node-module
-             # uses: actions/upload-artifact@v4
-              #with:
-               #     name: my-artifact
-                #    path: node-modules       
+            - name: upload node-module
+              uses: actions/upload-artifact@v4
+              with:
+                    name: my-artifact
+                    path: ./node-modules       
