@@ -28,10 +28,13 @@ jobs:
            
             - name: install dependencies 
               run : npm install 
+           
             - name: unit test 
               id: nodejs-unit-test-step
               run: npm test
+           
             - name: list files 
+              if:  failure() && (steps.nodejs-unit-test-step.outcome=='failure')
               run: ls- lR
             
             
