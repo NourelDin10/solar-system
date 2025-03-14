@@ -35,7 +35,9 @@ jobs:
            
             - name: list files 
               if:  failure() && (steps.nodejs-unit-test-step.outcome=='failure')
-              run: ls -lR
+              run: |
+               pwd 
+               ls -l test-results.xml || echo "file not exist"
             
             
             - name: archive test result 
