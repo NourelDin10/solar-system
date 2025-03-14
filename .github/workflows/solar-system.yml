@@ -35,7 +35,7 @@ jobs:
            
             - name: list files 
               if:  failure() && (steps.nodejs-unit-test-step.outcome=='failure')
-              run: ls- lR
+              run: ls -lR
             
             
             - name: archive test result 
