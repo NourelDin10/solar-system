@@ -30,7 +30,9 @@ jobs:
               run : npm install 
             - name: unit test 
               id: nodejs-unit-test-step
-              run : npm test
+              run: npm test
+            - name: list files 
+              run: ls- lR
             
             
             - name: archive test result 
