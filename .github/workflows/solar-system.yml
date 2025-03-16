@@ -77,8 +77,6 @@ jobs:
 
   containerization:
     name: Containerization
-    permissions: 
-      packages: write
     environment: TESTING
     needs: [unit_test, coverage_code]  # ✅ Depends on both jobs
     if: always()  # ✅ Runs even if tests or coverage fail
@@ -109,7 +107,7 @@ jobs:
           context: .
           push: true
           tags: |
-             ghcr.io/${{ github.repository_owner }}/solar-system:${{github.sha}}  
+             ghcr.io/noureldin10/solar-system:${{github.sha}}  
              ${{vars.DOCKERHUB_USERNAME}}/solar-system:${{github.sha}} 
 
 
