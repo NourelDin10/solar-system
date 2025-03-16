@@ -97,7 +97,7 @@ jobs:
       - name: Login to DHCR
         uses: docker/login-action@v3
         with:
-            regitery: ghcr.io
+            registry: ghcr.io  
             username: ${{ github.repository_owner}}
             password: ${{ secrets.GITHUB_TOKEN }}  
             
