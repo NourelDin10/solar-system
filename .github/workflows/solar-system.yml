@@ -87,3 +87,14 @@ jobs:
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }} 
+    
+  
+      - name: build the image 
+        run : |
+          docker build -t ${{vars.DOCKERHUB_USERNAME}}/solar-system:latest .
+
+
+      - name: push the image to dockerhub
+        run: |
+          docker push  ${{vars.DOCKERHUB_USERNAME}}/solar-system:latest
+
