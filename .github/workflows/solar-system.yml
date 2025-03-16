@@ -77,6 +77,8 @@ jobs:
 
   containerization:
     name: Containerization
+    permissions: 
+      packages: write
     environment: TESTING
     needs: [unit_test, coverage_code]  # ✅ Depends on both jobs
     if: always()  # ✅ Runs even if tests or coverage fail
@@ -95,6 +97,7 @@ jobs:
       - name: Login to DHCR
         uses: docker/login-action@v3
         with:
+            regitery: ghcr.io
             username: ${{ github.repository_owner}}
             password: ${{ secrets.GITHUB_TOKEN }}  
             
