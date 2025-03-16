@@ -81,6 +81,7 @@ jobs:
     login:
       name: continarization 
       needs: [unit_test, coverage_code]
+      if: always()
       runs-on: ubuntu-latest
       steps:
         -
