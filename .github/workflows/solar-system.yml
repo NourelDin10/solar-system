@@ -7,11 +7,11 @@ on:
             - 'feature/*'   
   
 
-#env:
- # MONGO_URI: 'mongodb+srv://${{ vars.MONGO_USERNAME }}:${{ secrets.MONGO_PASSWORD }}@cluster0.kirie.mongodb.net/?retryWrites=true&w=majority'
+env:
+ MONGO_URI: 'mongodb+srv://${{ vars.MONGO_USERNAME }}:${{ secrets.MONGO_PASSWORD }}@cluster0.kirie.mongodb.net/?retryWrites=true&w=majority'
  
-  #MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
-  #MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD}}
+ MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
+ MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD}}
               
 
 jobs:
@@ -34,18 +34,18 @@ jobs:
         
             - name: install dependencies 
               run : npm install 
-              
+
            
-           # - name: unit test 
-            #  id: nodejs-unit-test-step
-             # run: npm test
+            - name: unit test 
+              id: nodejs-unit-test-step
+              run: npm test
                         
-            #- name: archive test result 
-               # if:  always()
-              #uses: actions/upload-artifact@v4
-              #with:
-               #     name: test-result
-                #    path: test-results.xml   
+            - name: archive test result 
+              if:  always()
+              uses: actions/upload-artifact@v4
+              with:
+                    name: test-result
+                    path: test-results.xml   
                 
     coverage_code:
       runs-on: ubuntu-latest
@@ -58,11 +58,11 @@ jobs:
           with:
                 node-version: 18  
              
-        # - name: cache npm dependencies         
-        #   uses: actions/cache@v4
-        #   with:
-        #     path: node_modules
-        #     key: ${{ runner.os }}-node_modules-${{ hashFiles('package-lock.json') }} 
+        - name: cache npm dependencies         
+          uses: actions/cache@v4
+          with:
+            path: node_modules
+            key: ${{ runner.os }}-node_modules-${{ hashFiles('package-lock.json') }} 
                 
         - name: install dependencies 
           run : npm install
@@ -77,4 +77,16 @@ jobs:
                 name: code-coverage-Result
                 path: coverage
                 retention-days: 5
+
+    login:
+      name: continarization 
+      needs: [unit_test, coverage_code]
+      runs-on: ubuntu-latest
+      steps:
+        -
+          name: Login to Docker Hub
+          uses: docker/login-action@v3
+          with:
+            username: ${{ vars.DOCKERHUB_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_TOKEN }}              
 
