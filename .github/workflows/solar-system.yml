@@ -85,20 +85,39 @@ jobs:
 
       - name: Checkout Repo
         uses: actions/checkout@v4
-        
+
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }} 
+       
+      - name: Login to DHCR
+        uses: docker/login-action@v3
+        with:
+            username: ${{ github.repository_owner}}
+            password: ${{ secrets.GITHUB_TOKEN }}  
+            
+            
+
+      - name: Build and Push Docker Image to GHCR
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+             ghcr.io/${{ github.repository_owner }}/solar-system:${{github.sha}}  
+             ${{vars.DOCKERHUB_USERNAME}}/solar-system:${{github.sha}} 
+
+
     
-  
-      - name: build the image 
-        run : |
-          docker build -t ${{vars.DOCKERHUB_USERNAME}}/solar-system:latest .
+     
+      # - name: build the image 
+      #   run : |
+      #     docker build -t ${{vars.DOCKERHUB_USERNAME}}/solar-system:latest .
 
 
-      - name: push the image to dockerhub
-        run: |
-          docker push  ${{vars.DOCKERHUB_USERNAME}}/solar-system:latest
+      # - name: push the image to dockerhub
+      #   run: |
+      #     docker push  ${{vars.DOCKERHUB_USERNAME}}/solar-system:latest
 
