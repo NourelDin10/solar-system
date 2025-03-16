@@ -78,6 +78,8 @@ jobs:
   containerization:
     name: Containerization
     environment: TESTING
+    permissions: 
+      packages: write
     needs: [unit_test, coverage_code]  # ✅ Depends on both jobs
     if: always()  # ✅ Runs even if tests or coverage fail
     runs-on: ubuntu-latest
