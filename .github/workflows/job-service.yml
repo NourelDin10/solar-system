@@ -1,13 +1,13 @@
-name: apply jb services
+name: Apply Job Services
 on:
-    workflow_dispatch: 
-    push: 
-        branches: 
-            - main 
-            - 'feature/*' 
+    workflow_dispatch:
+    push:
+        branches:
+            - main
+            - 'feature/*'
 
 jobs:
-  unit_test:  
+  unit_test:
     runs-on: ubuntu-latest
     services:
       mongo_db:
@@ -15,21 +15,35 @@ jobs:
         ports:
           - 27017:27017
         env:
-          MONGO_INITDB_ROOT_USERNAME: mongoadmin 
-          MONGO_INITDB_ROOT_PASSWORD: secret  
-    env:     
-         MONGO_URI: mongodb://mongoadmin:secret@localhost:27017/test
+          MONGO_INITDB_ROOT_USERNAME: mongoadmin
+          MONGO_INITDB_ROOT_PASSWORD: secret
+
+    env:
+      MONGO_URI: mongodb://mongoadmin:secret@localhost:27017/test
+      MONGO_USERNAME: mongoadmin
+      MONGO_PASSWORD: secret
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Install Dependencies
-        run: npm install  # If you're using Node.js
-     
-      - name: waiting
-        run: sleep 10
+        run: npm install
+
+      - name: Wait for MongoDB to be Ready
+        run: |
+          for i in {1..30}; do
+            if mongo --host localhost --eval "db.runCommand({ping: 1})"; then
+              echo "MongoDB is up!"
+              exit 0
+            fi
+            echo "Waiting for MongoDB..."
+            sleep 2
+          done
+          echo "MongoDB did not start in time"
+          exit 1
 
       - name: Run Tests
         run: npm test
         env:
-          MONGO_URI: mongodb://mongoadmin:secret@localhost:27017/  
+          MONGO_URI: mongodb://mongoadmin:secret@localhost:27017/test
