@@ -1,0 +1,30 @@
+name: solar system overview
+on:
+    workflow_dispatch: 
+    push: 
+        branches: 
+            - main 
+            - 'feature/*' 
+
+jobs:
+  unit_test:  
+    runs-on: ubuntu-latest
+    services:
+      mongo_db:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: mongoadmin 
+          MONGO_INITDB_ROOT_PASSWORD: secret  
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: npm install  # If you're using Node.js
+
+      - name: Run Tests
+        run: npm test
+        env:
+          MONGO_URI: mongodb://mongoadmin:secret@localhost:27017/  
