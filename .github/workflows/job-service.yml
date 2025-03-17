@@ -17,12 +17,17 @@ jobs:
         env:
           MONGO_INITDB_ROOT_USERNAME: mongoadmin 
           MONGO_INITDB_ROOT_PASSWORD: secret  
+    env:     
+         MONGO_URI: mongodb://mongoadmin:secret@localhost:27017/test
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Install Dependencies
         run: npm install  # If you're using Node.js
+     
+      - name: waiting
+        run: sleep 10
 
       - name: Run Tests
         run: npm test
