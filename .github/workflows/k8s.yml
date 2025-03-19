@@ -5,7 +5,7 @@ jobs:
     test_k8s:
         runs-on: ubuntu-latest  
         steps:
-            - name: Connect to Remote Server
+            - name: Connect to Remote Server 
               uses: appleboy/ssh-action@v1
               with: 
                     host: ${{ secrets.SSH_HOST }}
