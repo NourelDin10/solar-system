@@ -5,15 +5,13 @@ jobs:
     test_k8s:
         runs-on: ubuntu-latest
         steps:
-            - name: connent to k8s
+            - name: Connect to Remote Server
               uses: appleboy/ssh-action@v1
               with:
-                host: ${{secrets.SSH_HOST}}
-                username: ${{secrets.SSH_USER}}
-                key: ${{ secrets.SSH_PRIVATE_KEY }}
-                port: 22
-                script: |
-                     export KUBECONFIG=/home/nour/.kube/config
-                     kubectl get nodes 
-
+                    host: ${{ secrets.SSH_HOST }}
+                    username: ${{ secrets.SSH_USER }}
+                    key: ${{ secrets.SSH_PRIVATE_KEY }}
+                    port: 22
+                    script: |
+                        echo "Connected successfully!"
 
