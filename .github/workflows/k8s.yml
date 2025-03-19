@@ -7,7 +7,7 @@ jobs:
         steps:
             - name: Connect to Remote Server
               uses: appleboy/ssh-action@v1
-              with:
+              with: 
                     host: ${{ secrets.SSH_HOST }}
                     username: ${{ secrets.SSH_USER }}
                     key: ${{ secrets.SSH_PRIVATE_KEY }}
