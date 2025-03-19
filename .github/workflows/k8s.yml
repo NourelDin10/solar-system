@@ -8,7 +8,7 @@ jobs:
             - name: connent to k8s
               uses: appleboy/ssh-action@v1
               with:
-                host: ${{secrets.SSH-HOST}}
+                host: ${{secrets.SSH_HOST}}
                 username: ${{secrets.SSH_USER}}
                 password: ${{ secrets.SSH_PRIVATE_KEY }}
                 script: |
