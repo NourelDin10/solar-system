@@ -9,11 +9,11 @@ jobs:
               uses: azure/setup-kubectl@v4
               with:
                version: 'v1.30.0'
-            - name: set kubeconfig
-              uses: azure/k8s-set-context@v4
-              with:
-                method: kubeconfig
-                kubeconfig: ${{secrets.KUBECONFIG}}
+            - name: Set Kubeconfig
+              run: |
+                 echo "${{ secrets.KUBECONFIG }}" > kubeconfig.yaml
+                 export KUBECONFIG=$PWD/kubeconfig.yaml
+          
             - name: fetch kubernates cluster detailes 
               run: |
                 kubectl get nodes
