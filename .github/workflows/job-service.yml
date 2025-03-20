@@ -21,15 +21,23 @@ jobs:
         run: npm install 
 
       - name: Run Unit Tests
-        continue-on-error: true
         id: nodejs-unit-test-step
         run: npm test
         
   notify:
       runs-on: ubuntu-latest
       needs: unit_test
-      if: failure()
+      if: always()
       steps:
+        - name: Check Unit Test Result
+          run: |
+            if["${{needs.unit_test.Result}}"=="failure"]; then
+                      echo "Unit tests failed! Sending notification..."
+                      else
+                           echo "Unit tests passed! Skipping notification."
+            fi
+
+          
         - name: Send Slack Notification
           uses: rtCamp/action-slack-notify@v2
           env:
