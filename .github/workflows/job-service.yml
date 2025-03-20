@@ -1,6 +1,5 @@
-name: solar system overview
+name: notify
 on:
-    workflow_dispatch: 
     push: 
         branches: 
             - main 
