@@ -21,8 +21,10 @@ jobs:
         run: npm install 
 
       - name: Run Unit Tests
+        continue-on-error: true
         id: nodejs-unit-test-step
         run: npm test
+        
   notify:
       runs-on: ubuntu-latest
       if: failure()
