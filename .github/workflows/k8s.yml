@@ -5,13 +5,8 @@ jobs:
     test_k8s:
         runs-on: ubuntu-latest  
         steps:
-            - name: Connect to Remote Server 
-              uses: appleboy/ssh-action@v1
-              with: 
-                    host: ${{ secrets.SSH_HOST }}
-                    username: ${{ secrets.SSH_USER }}
-                    key: ${{ secrets.SSH_PRIVATE_KEY }}
-                    port: 22
-                    script: |
-                        echo "Connected successfully!"
-
+            - name: set kubeconfig
+              uses: azure/k8s-set-context@v4
+              with:
+                method: kubeconfig
+                kubeconfig: ${{secrets.KUBECONFIG}}
