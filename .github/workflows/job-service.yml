@@ -1,16 +1,35 @@
-name: notify
+name: slack notifying 
 on:
     push:  
         branches: 
             - main 
             - 'feature/*'  
 jobs:
-    test:
+  
+  unit_test:  
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies 
+        run: npm install 
+
+      - name: Run Unit Tests
+        id: nodejs-unit-test-step
+        run: npm test
+  notify:
       runs-on: ubuntu-latest
+      if: always()
       steps:
         - name: Send Slack Notification
           uses: rtCamp/action-slack-notify@v2
           env:
-            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}  # بنستخدم الـ Secret اللي أضفناه
-            SLACK_MESSAGE: " Workflow `${{ github.workflow }}` انتهى بحالة `${{ job.status }}`!"
+            SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}  
+            SLACK_MESSAGE: " Workflow which name is ${{ github.workflow }} ${{ job.status }}`!"
             SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}            
