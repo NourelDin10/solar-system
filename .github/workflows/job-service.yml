@@ -31,7 +31,7 @@ jobs:
       steps:
         - name: Check Unit Test Result
           run: |
-            if["${{needs.unit_test.Result}}"=="failure"]; then
+            if [ "${{needs.unit_test.results}}" = "failure" ]; then
                       echo "Unit tests failed! Sending notification..."
                       else
                            echo "Unit tests passed! Skipping notification."
