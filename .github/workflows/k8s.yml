@@ -5,6 +5,10 @@ jobs:
     test_k8s:
         runs-on: ubuntu-latest  
         steps:
+            - name: install kubectl
+              uses: azure/setup-kubectl@v4
+              with:
+               version: 'v1.30.0'
             - name: set kubeconfig
               uses: azure/k8s-set-context@v4
               with:
