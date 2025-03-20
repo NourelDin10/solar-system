@@ -29,18 +29,10 @@ jobs:
       needs: unit_test
       if: always()
       steps:
-        - name: Check Unit Test Result
-          run: |
-            if [ "${{needs.unit_test.results}}" = "failure" ]; then
-                      echo "Unit tests failed! Sending notification..."
-                      else
-                           echo "Unit tests passed! Skipping notification."
-            fi
-
-          
+  
         - name: Send Slack Notification
           uses: rtCamp/action-slack-notify@v2
           env:
             SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}  
-            SLACK_MESSAGE: " Workflow which name is ${{ github.workflow }} ${{ job.status }}`!"
-            SLACK_COLOR: danger          
+            SLACK_MESSAGE: " Workflow which name is ${{ github.workflow }} is run !"
+                    
