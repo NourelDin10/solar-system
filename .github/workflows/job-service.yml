@@ -25,11 +25,11 @@ jobs:
         run: npm test
   notify:
       runs-on: ubuntu-latest
-      if: always()
+      if: failure()
       steps:
         - name: Send Slack Notification
           uses: rtCamp/action-slack-notify@v2
           env:
             SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}  
             SLACK_MESSAGE: " Workflow which name is ${{ github.workflow }} ${{ job.status }}`!"
-            SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}            
+            SLACK_COLOR: danger          
