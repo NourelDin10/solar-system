@@ -2,7 +2,7 @@ name: test kubernates
 on: 
     push 
 jobs:
-    test_k8s:
+    test_k8s: 
         runs-on: ubuntu-latest  
         steps:
             - name: install kubectl
